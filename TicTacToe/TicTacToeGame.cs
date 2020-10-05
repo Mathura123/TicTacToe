@@ -7,6 +7,7 @@ namespace TicTacToe
     class TicTacToeGame
     {
         char[] board = new char[10];
+        char choice;
 
         public void CreateBoard()
         {
@@ -18,7 +19,7 @@ namespace TicTacToe
         public void ChooseLetter()
         {
             Console.WriteLine("Enter your letter X or O");
-            char choice = Convert.ToChar(Console.ReadLine());
+            choice = Convert.ToChar(Console.ReadLine());
             if ((char.ToUpper(choice) == 'X') || (char.ToUpper(choice) == 'O'))
             {
                 Console.WriteLine("Your choice is " + char.ToUpper(choice));
@@ -49,14 +50,13 @@ namespace TicTacToe
         public void GoToDesiredLocation()
         {
             Console.WriteLine("Enter you desired location between 1 and 9");
-            int selectedLocation;
             int desiredLocation = Convert.ToInt32(Console.ReadLine());
             if ((desiredLocation <= 9) && (desiredLocation >= 1))
             {
                 if (board[desiredLocation] == ' ')
                 {
                     Console.WriteLine("Location " + desiredLocation + " Selected");
-                    selectedLocation = desiredLocation;
+                    board[desiredLocation] = choice;
                 }
                 else
                 {
