@@ -11,6 +11,7 @@ namespace TicTacToe
             game.CreateBoard();
             game.ChooseLetter();
             game.ShowBoard();
+            game.GoToDesiredLocation();
         }
     }
     

@@ -12,7 +12,7 @@ namespace TicTacToe
         {
             for (int i = 1; i < board.Length; i++)
             {
-                board[i] = 'A';
+                board[i] = ' ';
             }
         }
         public void ChooseLetter()
@@ -42,8 +42,32 @@ namespace TicTacToe
                 }
                 if ((i % size) == 0)
                 {
-                    Console.WriteLine();
+                    Console.WriteLine("\n---|---|---");
                 }
+            }
+        }
+        public void GoToDesiredLocation()
+        {
+            Console.WriteLine("Enter you desired location between 1 and 9");
+            int selectedLocation;
+            int desiredLocation = Convert.ToInt32(Console.ReadLine());
+            if ((desiredLocation <= 9) && (desiredLocation >= 1))
+            {
+                if (board[desiredLocation] == ' ')
+                {
+                    Console.WriteLine("Location " + desiredLocation + " Selected");
+                    selectedLocation = desiredLocation;
+                }
+                else
+                {
+                    Console.WriteLine("Desired location is already filled\nTry Again");
+                    GoToDesiredLocation();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Wrong Location\nTry Again");
+                GoToDesiredLocation();
             }
         }
     }
