@@ -47,7 +47,7 @@ namespace TicTacToe
                 }
             }
         }
-        public void GoToDesiredLocation()
+        public void MakeMoveInDesiredLocation()
         {
             Console.WriteLine("Enter you desired location between 1 and 9");
             int desiredLocation = Convert.ToInt32(Console.ReadLine());
@@ -61,13 +61,13 @@ namespace TicTacToe
                 else
                 {
                     Console.WriteLine("Desired location is already filled\nTry Again");
-                    GoToDesiredLocation();
+                    MakeMoveInDesiredLocation();
                 }
             }
             else
             {
                 Console.WriteLine("Wrong Location\nTry Again");
-                GoToDesiredLocation();
+                MakeMoveInDesiredLocation();
             }
         }
     }
