@@ -171,6 +171,31 @@ namespace TicTacToe
             }
             return blockingMove;
         }
+        private bool CornerMove()
+        {
+            bool cornerMove=false;
+            if(board[1]==' ')
+            {
+                cornerMove = true;
+                MakeMove(playersChoice[Player.Computer], 1);
+            }
+            else if (board[size] == ' ')
+            {
+                cornerMove = true;
+                MakeMove(playersChoice[Player.Computer], size);
+            }
+            else if (board[7] == ' ')
+            {
+                cornerMove = true;
+                MakeMove(playersChoice[Player.Computer], 7);
+            }
+            else if (board[9] == ' ')
+            {
+                cornerMove = true;
+                MakeMove(playersChoice[Player.Computer], 9);
+            }
+            return cornerMove;
+        }
         public void ComputerMove()
         {
             bool winningMove = WinningMove();
@@ -184,12 +209,16 @@ namespace TicTacToe
                 bool blockingMove = BlockingMove();
                 if(blockingMove==false)
                 {
-                    for (int i = 1; i < board.Length; i++)
+                    bool cornerMove = CornerMove();
+                    if (cornerMove == false)
                     {
-                        if (IsSpace(i) == true)
+                        for (int i = 1; i < board.Length; i++)
                         {
-                            MakeMove(playersChoice[Player.Computer], i);
-                            break;
+                            if (IsSpace(i) == true)
+                            {
+                                MakeMove(playersChoice[Player.Computer], i);
+                                break;
+                            }
                         }
                     }
                 }
