@@ -8,7 +8,8 @@ namespace TicTacToe
     {
         char[] board = new char[10];
         char choice;
-
+        public enum Player { User, Computer };
+        public static Player player;
         public void CreateBoard()
         {
             for (int i = 1; i < board.Length; i++)
@@ -46,6 +47,22 @@ namespace TicTacToe
                     Console.WriteLine("\n---|---|---");
                 }
             }
+        }
+        public Player DoToss()
+        {
+            Random random = new Random();
+            int toss = random.Next(2);
+            if (toss == 0)
+            {
+                Console.WriteLine("Computer ==> Start");
+                player = Player.Computer;
+            }
+            else
+            {
+                Console.WriteLine("User ==> Start");
+                player = Player.User;
+            }
+            return player;
         }
         private bool IsSpace(int location)
         {
