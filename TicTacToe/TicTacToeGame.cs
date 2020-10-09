@@ -9,6 +9,7 @@ namespace TicTacToe
         static char[] board = new char[10];
         int size = Convert.ToInt32(Math.Sqrt(board.Length));
         string winner;
+        public static bool end;
         public enum Player { User, Computer };
         private Dictionary<Player, char> playersChoice = new Dictionary<Player, char>();
         public static Player player;
@@ -49,6 +50,7 @@ namespace TicTacToe
                     Console.WriteLine("\n---|---|---");
                 }
             }
+            Console.WriteLine("\n");
         }
         public void UserChooseLetter()
         {
@@ -299,6 +301,7 @@ namespace TicTacToe
                     break;
                 }
             }
+            winner = "Tie";
             return tie;
         }
         private bool CompareRowWise()
@@ -400,7 +403,15 @@ namespace TicTacToe
             if(IsWin()==true)
             {
                 Console.WriteLine("Winner is "+ winner);
+                end = true;
+                
+            }
+            if(IsTie()==true)
+            {
+                Console.WriteLine("The Game is Tied");
+                end = true;
             }
         }
+        
     }
 }
