@@ -9,18 +9,47 @@ namespace TicTacToe
             Console.WriteLine("Welcome to TicTacToe Game");
             TicTacToeGame game = new TicTacToeGame();
             game.CreateBoard();
-            game.DoToss();
-            game.ChooseLetter();
+            TicTacToeGame.player = game.DoToss();
+            if(TicTacToeGame.player == TicTacToeGame.Player.User)
+            {
+                game.UserChooseLetter();
+            }
+            if(TicTacToeGame.player==TicTacToeGame.Player.Computer)
+            {
+                game.ComputerChooseLetter();
+            }
+            game.ComputerMove();
+            game.WriteWinner();
             game.UserMove();
-            game.ShowBoard();
+            game.WriteWinner();
+            game.ComputerMove();
+            game.WriteWinner();
             game.UserMove();
-            game.ShowBoard();
+            game.WriteWinner();
+            game.ComputerMove();
+            game.WriteWinner();
             game.UserMove();
-            game.ShowBoard();
+            game.WriteWinner();
+            game.ComputerMove();
+            game.WriteWinner();
             game.UserMove();
-            game.ShowBoard();
+            game.WriteWinner();
+            game.ComputerMove();
+            game.WriteWinner();
             game.UserMove();
-            game.ShowBoard();
+            game.WriteWinner();
+            game.ComputerMove();
+            game.WriteWinner();
+            game.UserMove();
+            game.WriteWinner();
+            game.ComputerMove();
+            game.WriteWinner();
+            game.UserMove();
+            game.WriteWinner();
+            game.ComputerMove();
+            game.WriteWinner();
+            game.UserMove();
+            game.WriteWinner();
         }
     }
     

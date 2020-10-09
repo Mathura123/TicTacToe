@@ -7,45 +7,16 @@ namespace TicTacToe
     class TicTacToeGame
     {
         static char[] board = new char[10];
-        char choice;
         int size = Convert.ToInt32(Math.Sqrt(board.Length));
+        string winner;
         public enum Player { User, Computer };
+        private Dictionary<Player, char> playersChoice = new Dictionary<Player, char>();
         public static Player player;
         public void CreateBoard()
         {
             for (int i = 1; i < board.Length; i++)
             {
                 board[i] = ' ';
-            }
-        }
-        public void ChooseLetter()
-        {
-            Console.WriteLine("Enter your letter X or O");
-            choice = Convert.ToChar(Console.ReadLine());
-            if ((char.ToUpper(choice) == 'X') || (char.ToUpper(choice) == 'O'))
-            {
-                Console.WriteLine("Your choice is " + char.ToUpper(choice));
-                choice = char.ToUpper(choice);
-            }
-            else
-            {
-                Console.WriteLine("Incorrect letter\nTry once more");
-                ChooseLetter();
-            }
-        }
-        public void ShowBoard()
-        {
-            for (int i = 1; i < board.Length; i++)
-            {
-                Console.Write(" " + board[i]);
-                if ((i % size) != 0)
-                {
-                    Console.Write(" |");
-                }
-                if ((i % size) == 0)
-                {
-                    Console.WriteLine("\n---|---|---");
-                }
             }
         }
         public Player DoToss()
@@ -64,6 +35,64 @@ namespace TicTacToe
             }
             return player;
         }
+        public void ShowBoard()
+        {
+            for (int i = 1; i < board.Length; i++)
+            {
+                Console.Write(" " + board[i]);
+                if ((i % size) != 0)
+                {
+                    Console.Write(" |");
+                }
+                if ((i % size) == 0)
+                {
+                    Console.WriteLine("\n---|---|---");
+                }
+            }
+        }
+        public void UserChooseLetter()
+        {
+            Console.WriteLine("Enter your letter X or O");
+            char choice = Convert.ToChar(Console.ReadLine());
+            if ((char.ToUpper(choice) == 'X') || (char.ToUpper(choice) == 'O'))
+            {
+                choice = char.ToUpper(choice);
+                Console.WriteLine("User ==> " + choice);
+                playersChoice[Player.User] = choice;
+                if (choice == 'X')
+                {
+                    playersChoice[Player.Computer] = 'O';
+                }
+                else
+                {
+                    playersChoice[Player.Computer] = 'X';
+                }
+                Console.WriteLine("Computer ==> " + playersChoice[Player.Computer]);
+            }
+            else
+            {
+                Console.WriteLine("Incorrect letter\nTry once more");
+                UserChooseLetter();
+            }
+        }
+        public void ComputerChooseLetter()
+        {
+            Random random = new Random();
+            int letterIndex = random.Next(2);
+            switch(letterIndex)
+            {
+                case 0:
+                    playersChoice.Add(Player.Computer, 'X');
+                    playersChoice.Add(Player.User, 'O');
+                    break;
+                case 1:
+                    playersChoice.Add(Player.User, 'O');
+                    playersChoice.Add(Player.Computer, 'X');
+                    break;
+            }
+            Console.WriteLine("User ==> " + playersChoice[Player.User]);
+            Console.WriteLine("Computer ==> " + playersChoice[Player.Computer]);
+        }
         private bool IsSpace(int location)
         {
             return board[location] == ' ';
@@ -80,11 +109,12 @@ namespace TicTacToe
             {
                 if (IsSpace(desiredLocation)==true)
                 {
-                    MakeMove(choice, desiredLocation);
-                    if (DetermineGameSituation(Player.User) != "None")
+                    MakeMove(playersChoice[Player.User], desiredLocation);
+                    if(IsWin()==true)
                     {
-                        Console.WriteLine("Player Won : " + Player.User);
+                        winner = Convert.ToString(Player.User);
                     }
+                    DetermineGameSituation(Player.User);
                 }
                 else
                 {
@@ -98,19 +128,45 @@ namespace TicTacToe
                 UserMove();
             }
         }
-        public string DetermineGameSituation(Player currentPlayer)
+        public void ComputerMove()
         {
-            string winner = "None";
-            if(IsWin()==true)
+            for(int i=1;i<board.Length;i++)
             {
-                winner = Convert.ToString(currentPlayer);
+                if(IsSpace(i)==true)
+                {
+                    MakeMove(playersChoice[Player.Computer], i);
+                    if(IsWin()==true)
+                    {
+                        winner = Convert.ToString(Player.Computer);
+                        break;
+                    }
+                    else
+                    {
+                        board[i] = ' ';
+                    }
+                }
             }
-            else
+            if(IsWin()==false)
+            {
+                for(int i=1;i<board.Length;i++)
+                {
+                    if(IsSpace(i)==true)
+                    {
+                        MakeMove(playersChoice[Player.Computer], i);
+                        break;
+                    }
+                }
+            }
+            DetermineGameSituation(Player.Computer);
+        }
+        public void DetermineGameSituation(Player currentPlayer)
+        {
+            if(IsWin()==false)
             {
                 if(IsTie()==false)
                 ChangeTurn(currentPlayer);
             }
-            return winner;
+            ShowBoard();
         }
         public bool IsWin()
         {
@@ -236,7 +292,12 @@ namespace TicTacToe
             else
                 player = Player.Computer;
         }
-        
-
+        public void WriteWinner()
+        {
+            if(IsWin()==true)
+            {
+                Console.WriteLine("Winner is "+ winner);
+            }
+        }
     }
 }
