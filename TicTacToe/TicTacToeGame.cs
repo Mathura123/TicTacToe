@@ -47,27 +47,34 @@ namespace TicTacToe
                 }
             }
         }
-        public void MakeMoveInDesiredLocation()
+        private bool IsSpace(int location)
+        {
+            return board[location] == ' ';
+        }
+        private void MakeMove(char choice, int location)
+        {
+            board[location] = choice;
+        }
+        public void UserMove()
         {
             Console.WriteLine("Enter you desired location between 1 and 9");
             int desiredLocation = Convert.ToInt32(Console.ReadLine());
             if ((desiredLocation <= 9) && (desiredLocation >= 1))
             {
-                if (board[desiredLocation] == ' ')
+                if (IsSpace(desiredLocation)==true)
                 {
-                    Console.WriteLine("Location " + desiredLocation + " Selected");
-                    board[desiredLocation] = choice;
+                    MakeMove(choice, desiredLocation);
                 }
                 else
                 {
                     Console.WriteLine("Desired location is already filled\nTry Again");
-                    MakeMoveInDesiredLocation();
+                    UserMove();
                 }
             }
             else
             {
                 Console.WriteLine("Wrong Location\nTry Again");
-                MakeMoveInDesiredLocation();
+                UserMove();
             }
         }
     }
