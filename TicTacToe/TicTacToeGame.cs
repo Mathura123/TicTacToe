@@ -7,8 +7,8 @@ namespace TicTacToe
     class TicTacToeGame
     {
         static char[] board = new char[10];
-        int size = Convert.ToInt32(Math.Sqrt(board.Length));
-        string winner;
+        private int size = Convert.ToInt32(Math.Sqrt(board.Length));
+        private string winner;
         public static bool end;
         public enum Player { User, Computer };
         private Dictionary<Player, char> playersChoice = new Dictionary<Player, char>();
@@ -81,7 +81,7 @@ namespace TicTacToe
         {
             Random random = new Random();
             int letterIndex = random.Next(2);
-            switch(letterIndex)
+            switch (letterIndex)
             {
                 case 0:
                     playersChoice.Add(Player.Computer, 'X');
@@ -109,10 +109,10 @@ namespace TicTacToe
             int desiredLocation = Convert.ToInt32(Console.ReadLine());
             if ((desiredLocation <= 9) && (desiredLocation >= 1))
             {
-                if (IsSpace(desiredLocation)==true)
+                if (IsSpace(desiredLocation) == true)
                 {
                     MakeMove(playersChoice[Player.User], desiredLocation);
-                    if(IsWin()==true)
+                    if (IsWin() == true)
                     {
                         winner = Convert.ToString(Player.User);
                     }
@@ -175,8 +175,8 @@ namespace TicTacToe
         }
         private bool CornerMove()
         {
-            bool cornerMove=false;
-            if(board[1]==' ')
+            bool cornerMove = false;
+            if (board[1] == ' ')
             {
                 cornerMove = true;
                 MakeMove(playersChoice[Player.Computer], 1);
@@ -201,14 +201,14 @@ namespace TicTacToe
         private bool CentralOrEdgeMove()
         {
             bool centralOrEdgeMove = false;
-            if(board[5]==' ')
+            if (board[5] == ' ')
             {
                 MakeMove(playersChoice[Player.Computer], 5);
                 centralOrEdgeMove = true;
             }
             else
             {
-                if(board[2]== ' ')
+                if (board[2] == ' ')
                 {
                     MakeMove(playersChoice[Player.Computer], 2);
                     centralOrEdgeMove = true;
@@ -234,15 +234,15 @@ namespace TicTacToe
         public void ComputerMove()
         {
             bool winningMove = WinningMove();
-            
+
             if (winningMove == true)
             {
                 winner = Convert.ToString(Player.Computer);
             }
-            if(winningMove ==false)
+            if (winningMove == false)
             {
                 bool blockingMove = BlockingMove();
-                if(blockingMove==false)
+                if (blockingMove == false)
                 {
                     bool cornerMove = CornerMove();
                     if (cornerMove == false)
@@ -266,10 +266,10 @@ namespace TicTacToe
         }
         public void DetermineGameSituation(Player currentPlayer)
         {
-            if(IsWin()==false)
+            if (IsWin() == false)
             {
-                if(IsTie()==false)
-                ChangeTurn(currentPlayer);
+                if (IsTie() == false)
+                    ChangeTurn(currentPlayer);
             }
             ShowBoard();
         }
@@ -400,18 +400,17 @@ namespace TicTacToe
         }
         public void WriteWinner()
         {
-            if(IsWin()==true)
+            if (IsWin() == true)
             {
-                Console.WriteLine("Winner is "+ winner);
+                Console.WriteLine("Winner is " + winner + "\n");
                 end = true;
-                
+
             }
-            if(IsTie()==true)
+            else if (IsTie() == true)
             {
-                Console.WriteLine("The Game is Tied");
+                Console.WriteLine("The Game is Tied\n");
                 end = true;
             }
         }
-        
     }
 }

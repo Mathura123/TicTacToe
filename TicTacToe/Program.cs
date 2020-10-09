@@ -4,7 +4,7 @@ namespace TicTacToe
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("Welcome to TicTacToe Game");
             Console.WriteLine("=========================\n");
@@ -32,8 +32,24 @@ namespace TicTacToe
                     game.WriteWinner();
                 }
             }
+        EnterKey:
+            Console.WriteLine("\nEnter :  1 to play once more");
+            Console.WriteLine("Enter :  2 to Exit");
+            int key = Convert.ToInt32(Console.ReadLine());
+            switch (key)
+            {
+                case 1:
+                    TicTacToeGame.end = false;
+                    TicTacToe.Program.Main();
+                    break;
+                case 2:
+                    break;
+                default:
+                    Console.WriteLine("Wrong key\nTry Once Again");
+                    goto EnterKey;
+                    break;
+            }
         }
     }
-    
 }
 
