@@ -128,16 +128,17 @@ namespace TicTacToe
                 UserMove();
             }
         }
-        public void ComputerMove()
+        private bool WinningMove()
         {
-            for(int i=1;i<board.Length;i++)
+            bool winningMove = false;
+            for (int i = 1; i < board.Length; i++)
             {
-                if(IsSpace(i)==true)
+                if (IsSpace(i) == true)
                 {
                     MakeMove(playersChoice[Player.Computer], i);
-                    if(IsWin()==true)
+                    if (IsWin() == true)
                     {
-                        winner = Convert.ToString(Player.Computer);
+                        winningMove = true;
                         break;
                     }
                     else
@@ -146,14 +147,50 @@ namespace TicTacToe
                     }
                 }
             }
-            if(IsWin()==false)
+            return winningMove;
+        }
+        private bool BlockingMove()
+        {
+            bool blockingMove = false;
+            for (int i = 1; i < board.Length; i++)
             {
-                for(int i=1;i<board.Length;i++)
+                if (IsSpace(i) == true)
                 {
-                    if(IsSpace(i)==true)
+                    MakeMove(playersChoice[Player.User], i);
+                    if (IsWin() == true)
                     {
                         MakeMove(playersChoice[Player.Computer], i);
+                        blockingMove = true;
                         break;
+                    }
+                    else
+                    {
+                        board[i] = ' ';
+                    }
+                }
+            }
+            return blockingMove;
+        }
+        public void ComputerMove()
+        {
+            bool winningMove = WinningMove();
+            
+            if (winningMove == true)
+            {
+                winner = Convert.ToString(Player.Computer);
+            }
+            if(winningMove ==false)
+            {
+                bool blockingMove = BlockingMove();
+                if(blockingMove==false)
+                {
+                    for (int i = 1; i < board.Length; i++)
+                    {
+                        if (IsSpace(i) == true)
+                        {
+                            MakeMove(playersChoice[Player.Computer], i);
+                            break;
+                        }
                     }
                 }
             }
