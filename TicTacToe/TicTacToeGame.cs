@@ -196,6 +196,39 @@ namespace TicTacToe
             }
             return cornerMove;
         }
+        private bool CentralOrEdgeMove()
+        {
+            bool centralOrEdgeMove = false;
+            if(board[5]==' ')
+            {
+                MakeMove(playersChoice[Player.Computer], 5);
+                centralOrEdgeMove = true;
+            }
+            else
+            {
+                if(board[2]== ' ')
+                {
+                    MakeMove(playersChoice[Player.Computer], 2);
+                    centralOrEdgeMove = true;
+                }
+                else if (board[4] == ' ')
+                {
+                    MakeMove(playersChoice[Player.Computer], 4);
+                    centralOrEdgeMove = true;
+                }
+                else if (board[6] == ' ')
+                {
+                    MakeMove(playersChoice[Player.Computer], 6);
+                    centralOrEdgeMove = true;
+                }
+                else if (board[8] == ' ')
+                {
+                    MakeMove(playersChoice[Player.Computer], 8);
+                    centralOrEdgeMove = true;
+                }
+            }
+            return centralOrEdgeMove;
+        }
         public void ComputerMove()
         {
             bool winningMove = WinningMove();
@@ -212,12 +245,16 @@ namespace TicTacToe
                     bool cornerMove = CornerMove();
                     if (cornerMove == false)
                     {
-                        for (int i = 1; i < board.Length; i++)
+                        bool centralOrEdgeMove = CentralOrEdgeMove();
+                        if (centralOrEdgeMove == false)
                         {
-                            if (IsSpace(i) == true)
+                            for (int i = 1; i < board.Length; i++)
                             {
-                                MakeMove(playersChoice[Player.Computer], i);
-                                break;
+                                if (IsSpace(i) == true)
+                                {
+                                    MakeMove(playersChoice[Player.Computer], i);
+                                    break;
+                                }
                             }
                         }
                     }
